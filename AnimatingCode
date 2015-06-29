@@ -1,0 +1,41 @@
+ final TextView mSwitcher = (TextView) findViewById(R.id.bookContent);
+    mSwitcher.setText("old text");
+
+    final Animation in = new AlphaAnimation(0.0f, 1.0f);
+    in.setDuration(3000);
+
+    final Animation out = new AlphaAnimation(1.0f, 0.0f);
+    out.setDuration(3000);
+
+    Button moveOn = (Button) findViewById(R.id.moveOn);
+    moveOn.setOnClickListener( new OnClickListener() {
+        public void onClick(View v) {
+
+            mSwitcher.startAnimation(out);
+            mSwitcher.setText("new text");
+            mSwitcher.startAnimation(in);
+
+        }
+    });
+    //Here Second animation wont work
+    
+   // This makes only the "in" animation work.
+
+//To make the second animation start right after the first, you can add a listener to your first animation:
+//Coding Start here
+out.setAnimationListener(new AnimationListener() {
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        mSwitcher.setText("New Text");
+        mSwitcher.startAnimation(in);
+
+    }
+});
+Then, in your onClick() method:
+
+public void onClick(View v) {
+
+    mSwitcher.startAnimation(out);
+
+}
